@@ -75,7 +75,11 @@ const App = () => {
   const addBlog = (e) => {
     e.preventDefault();
 
-    const blogObject = {};
+    const blogObject = {
+      title: e.target[0].value,
+      author: user.name,
+      likes: 10,
+    };
 
     blogService.create(blogObject).then((returnedObject) => {
       setBlogs(blogs.concat(returnedObject));
