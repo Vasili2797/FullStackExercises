@@ -108,22 +108,24 @@ const App = () => {
   return (
     <div>
       <div>
-        <p>{user.name} logged-in</p>
+        <p>
+          {user.name} is logged-in
+          <button
+            style={{ marginLeft: "10px" }}
+            onClick={() => {
+              window.localStorage.clear();
+              window.location.reload();
+            }}
+          >
+            Log Out
+          </button>
+        </p>
         {blogForm()}
       </div>
       <h2>blogs</h2>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
-      <hr />
-      <button
-        onClick={() => {
-          window.localStorage.clear();
-          window.location.reload();
-        }}
-      >
-        Log Out
-      </button>
     </div>
   );
 };
