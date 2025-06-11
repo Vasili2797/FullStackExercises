@@ -1,8 +1,6 @@
 import "../index.css";
 
 const Notification = ({ message }) => {
-  console.log(message);
-
   if (message === null || message == "") {
     return null;
   } else if (message.includes("a new blog")) {

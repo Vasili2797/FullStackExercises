@@ -3,10 +3,11 @@ import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import Notification from "./components/Notification";
+import NewBlog from "./components/NewBlog";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-  const [newBlog, setNewBlog] = useState("");
+  const [newBlog, setNewBlog] = useState({});
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -73,44 +74,6 @@ const App = () => {
     );
   };
 
-  const addBlog = (e) => {
-    e.preventDefault();
-
-    const blogObject = {
-      title: e.target[0].value,
-      author: user.name,
-      likes: 10,
-    };
-
-    blogService
-      .create(blogObject)
-      .then((returnedObject) => {
-        setBlogs(blogs.concat(returnedObject));
-        setNewBlog("");
-      })
-      .then(() => {
-        setAddedNewBlogMessage(
-          `a new blog ${blogObject.title} by ${blogObject.author} added`
-        );
-        setTimeout(() => {
-          setAddedNewBlogMessage(null);
-        }, 5000);
-      });
-  };
-
-  const handleBlogChange = (e) => {
-    setNewBlog(e.target.value);
-  };
-
-  const blogForm = () => {
-    return (
-      <form onSubmit={addBlog}>
-        <input type="text" value={newBlog} onChange={handleBlogChange} />
-        <button type="submit">save</button>
-      </form>
-    );
-  };
-
   if (user === null) {
     return (
       <div>
@@ -136,7 +99,14 @@ const App = () => {
             Log Out
           </button>
         </p>
-        {blogForm()}
+        <NewBlog
+          newBlog={newBlog}
+          setNewBlog={setNewBlog}
+          user={user}
+          blogs={blogs}
+          setBlogs={setBlogs}
+          setAddedNewBlogMessage={setAddedNewBlogMessage}
+        />
       </div>
       <h2>blogs</h2>
       <Notification message={addedNewBlogMessage} />

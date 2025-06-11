@@ -27,3 +27,13 @@ h1 {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.input-container > p {
+  margin: 0;
+  text-transform: capitalize;
+}
+.button-container {
+  display: inline-flex;
+  gap: 2px;
+  flex-direction: column;
+}
