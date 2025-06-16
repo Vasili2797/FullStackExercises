@@ -32,8 +32,12 @@ h1 {
   margin: 0;
   text-transform: capitalize;
 }
+.btn{
+  margin-left: 5px;
+}
 .button-container {
   display: inline-flex;
   gap: 2px;
   flex-direction: column;
+  margin-top: 5px;
 }
