@@ -113,19 +113,23 @@ const App = () => {
       </div>
       <h2>blogs</h2>
       <Notification message={addedNewBlogMessage} />
-      {blogs.map((blog) => (
-        <>
-          <Blog
-            key={blog.id}
-            blog={blog}
-            updateBlog={(updatedBlog) => {
-              setBlogs(
-                blogs.map((b) => (b.id !== updatedBlog.id ? b : updatedBlog))
-              );
-            }}
-          />
-        </>
-      ))}
+      {blogs
+        .sort((a, b) => {
+          return b.likes - a.likes;
+        })
+        .map((blog) => (
+          <>
+            <Blog
+              key={blog.id}
+              blog={blog}
+              updateBlog={(updatedBlog) => {
+                setBlogs(
+                  blogs.map((b) => (b.id !== updatedBlog.id ? b : updatedBlog))
+                );
+              }}
+            />
+          </>
+        ))}
     </div>
   );
 };
