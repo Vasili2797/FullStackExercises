@@ -32,6 +32,11 @@ const Blog = ({ blog, updateBlog }) => {
           </button>
         </div>
         {blog.url && <div>URL: {blog.url}</div>}
+        {blog.user && blog.user.name ? (
+          <div>Added by: {blog.user.name}</div>
+        ) : (
+          <div>Added by: Unknown</div>
+        )}
         <button
           className="btn"
           style={{ marginTop: 5 }}
