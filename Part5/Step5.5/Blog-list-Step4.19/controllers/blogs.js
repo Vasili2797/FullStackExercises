@@ -41,14 +41,14 @@ blogsRouter.post("/", async (request, response) => {
       error: "user not found",
     });
   }
-  if (!body.title || !body.author || !body.likes) {
+  if (!body.title || !body.author) {
     return response.status(400).json({ content: "missing key details" });
   }
 
   const blog = new Blog({
     title: body.title,
     author: body.author,
-    url: body.url,
+    url: body.url || "N/A",
     likes: body.likes === undefined ? 0 : body.likes,
     user: user._id,
   });
@@ -71,6 +71,7 @@ blogsRouter.put("/:id", async (request, response) => {
     title: body.title,
     author: body.author,
     likes: body.likes,
+    url: body.url,
   };
 
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
