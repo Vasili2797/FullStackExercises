@@ -35,6 +35,10 @@ h1 {
 .btn{
   margin-left: 5px;
 }
+.btn:hover{
+  cursor: pointer;
+  background-color: blue;
+}
 .button-container {
   display: inline-flex;
   gap: 2px;
