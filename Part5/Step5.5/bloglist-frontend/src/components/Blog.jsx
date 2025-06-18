@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../index.css";
 import blogService from "../services/blogs";
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog }) => {
   const [view, setView] = useState(false);
 
   const blogStyle = {
@@ -16,14 +16,30 @@ const Blog = ({ blog, updateBlog }) => {
   if (view) {
     return (
       <div style={blogStyle}>
-        <div>Title: {blog.title}</div>
+        <div>
+          Title: {blog.title}
+          <button
+            className="btn"
+            style={{ marginTop: 5 }}
+            onClick={() => {
+              setView(!view);
+            }}
+          >
+            hide
+          </button>
+        </div>
         <div>Author: {blog.author}</div>
         <div>
           Likes: {blog.likes}
           <button
+            className="btn"
             style={{ marginLeft: 10 }}
             onClick={async () => {
-              const updated = { ...blog, likes: blog.likes + 1 };
+              const updated = {
+                ...blog,
+                likes: blog.likes + 1,
+                user: blog.user.id || blog.user,
+              };
               const updatedBlog = await blogService.update(blog.id, updated);
               updateBlog(updatedBlog);
             }}
@@ -32,19 +48,21 @@ const Blog = ({ blog, updateBlog }) => {
           </button>
         </div>
         {blog.url && <div>URL: {blog.url}</div>}
-        {blog.user && blog.user.name ? (
+        {blog.user || blog.user.name ? (
           <div>Added by: {blog.user.name}</div>
         ) : (
           <div>Added by: Unknown</div>
         )}
         <button
           className="btn"
-          style={{ marginTop: 5 }}
-          onClick={() => {
-            setView(!view);
+          onClick={async () => {
+            if (confirm("Do you want to delete?")) {
+              const deletedItem = await blogService.remove(blog.id);
+              deleteBlog(blog.id);
+            }
           }}
         >
-          hide
+          Remove
         </button>
       </div>
     );

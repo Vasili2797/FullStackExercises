@@ -9,7 +9,6 @@ import Togglable from "./components/Togglable";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-  const [newBlog, setNewBlog] = useState({});
   const [loginVisible, setLoginVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -124,8 +123,13 @@ const App = () => {
               blog={blog}
               updateBlog={(updatedBlog) => {
                 setBlogs(
-                  blogs.map((b) => (b.id !== updatedBlog.id ? b : updatedBlog))
+                  blogs.map((b) =>
+                    b.id === updatedBlog.id ? { ...updatedBlog } : b
+                  )
                 );
+              }}
+              deleteBlog={(id) => {
+                setBlogs((prevBlogs) => prevBlogs.filter((b) => b.id !== id));
               }}
             />
           </>
