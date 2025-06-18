@@ -20,7 +20,7 @@ const LoginForm = (props) => {
             name="password"
           />
         </div>
-        <button onClick={() => setLoginVisible(true)}>log in</button>
+        <button onClick={() => props.setLoginVisible(true)}>log in</button>
       </form>
     </div>
   );

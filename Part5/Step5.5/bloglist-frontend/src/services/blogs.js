@@ -8,8 +8,14 @@ const setToken = (newToken) => {
 };
 
 const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  const response = axios.get(baseUrl);
+  return response.then((response) => response.data);
 };
 
 const create = async (newObject) => {
