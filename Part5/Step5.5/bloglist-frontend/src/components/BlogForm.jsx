@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../index.css";
 
 const BlogForm = ({
@@ -9,7 +9,6 @@ const BlogForm = ({
   setAuthor,
   setUrl,
   addBlog,
-  onClick,
 }) => {
   return (
     <div>
