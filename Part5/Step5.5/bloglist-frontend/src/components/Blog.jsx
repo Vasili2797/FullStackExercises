@@ -15,7 +15,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
 
   if (view) {
     return (
-      <div style={blogStyle}>
+      <div style={blogStyle} key={blog.id}>
         <div>
           Title: {blog.title}
           <button
