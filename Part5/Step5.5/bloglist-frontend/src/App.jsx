@@ -118,22 +118,22 @@ const App = () => {
           return b.likes - a.likes;
         })
         .map((blog) => (
-          <>
-            <Blog
-              key={blog.id}
-              blog={blog}
-              updateBlog={(updatedBlog) => {
-                setBlogs(
-                  blogs.map((b) =>
-                    b.id === updatedBlog.id ? { ...updatedBlog } : b
-                  )
-                );
-              }}
-              deleteBlog={(id) => {
-                setBlogs((prevBlogs) => prevBlogs.filter((b) => b.id !== id));
-              }}
-            />
-          </>
+          <Blog
+            key={blog.id}
+            blog={blog}
+            updateBlog={(updatedBlog) => {
+              console.log(blog);
+
+              setBlogs(
+                blogs.map((b) =>
+                  b.id === updatedBlog.id ? { ...updatedBlog } : b
+                )
+              );
+            }}
+            deleteBlog={(id) => {
+              setBlogs((prevBlogs) => prevBlogs.filter((b) => b.id !== id));
+            }}
+          />
         ))}
     </div>
   );
