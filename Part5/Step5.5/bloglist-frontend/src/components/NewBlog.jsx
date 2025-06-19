@@ -40,7 +40,6 @@ const NewBlog = forwardRef(
         }
         setTimeout(() => {
           setAddedNewBlogMessage("");
-          console.log(newBlog);
         }, 5000);
       } catch (error) {
         console.log("Error adding blog: ", error);
