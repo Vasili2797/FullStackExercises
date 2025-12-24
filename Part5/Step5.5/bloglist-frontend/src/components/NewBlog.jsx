@@ -1,36 +1,34 @@
 import blogService from "../services/blogs";
-import { useState, forwardRef, useImperativeHandle } from "react";
+import { useState} from "react";
 import BlogForm from "./BlogForm";
 
-const NewBlog = forwardRef(
-  ({ blogs, setBlogs, setAddedNewBlogMessage, toggleRef }, ref) => {
+const NewBlog=(props) => {
+  const {setBlogs, setAddedNewBlogMessage, toggleRef } =props;
+
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [url, setUrl] = useState("");
 
-    useImperativeHandle(ref, () => ({
-      clearForm() {
-        setTitle("");
-        setAuthor("");
-        setUrl("");
-      },
-    }));
+    const clearingForm = () => {
+      setTitle("");
+      setAuthor("");
+      setUrl("");
+    };
+
 
     const addBlog = async (e) => {
       e.preventDefault();
       const blogObject = {
-        title: title,
-        author: author,
-        url: url,
-        likes: "0",
+        title,
+        author,
+        url,
+        likes: 0,
       };
 
       try {
         const newBlog = await blogService.create(blogObject);
-        setBlogs(blogs.concat(newBlog));
-        setTitle("");
-        setAuthor("");
-        setUrl("");
+        setBlogs(prev=>prev.concat(newBlog));
+        clearingForm();
         setAddedNewBlogMessage(
           `a new blog ${blogObject.title} by ${blogObject.author} added`
         );
@@ -46,12 +44,6 @@ const NewBlog = forwardRef(
       }
     };
 
-    const clearingForm = () => {
-      setTitle("");
-      setAuthor("");
-      setUrl("");
-    };
-
     return (
       <div>
         <BlogForm
@@ -62,12 +54,9 @@ const NewBlog = forwardRef(
           setAuthor={setAuthor}
           setUrl={setUrl}
           addBlog={addBlog}
-          setVisible={ref}
-          onClick={clearingForm}
         />
       </div>
     );
-  }
-);
+  };
 
 export default NewBlog;

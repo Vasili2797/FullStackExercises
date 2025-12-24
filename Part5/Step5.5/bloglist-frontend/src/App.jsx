@@ -14,8 +14,8 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [addedNewBlogMessage, setAddedNewBlogMessage] = useState("");
-
   const [user, setUser] = useState(null);
+
   const toggleFormRef = useRef();
 
   useEffect(() => {
@@ -40,11 +40,12 @@ const App = () => {
       });
 
       window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
-
       blogService.setToken(user.token);
+      
       setUser(user);
       setUsername("");
       setPassword("");
+      setErrorMessage(null);
     } catch (exception) {
       setErrorMessage("Wrong username or password");
       setTimeout(() => {
@@ -52,6 +53,11 @@ const App = () => {
       }, 5000);
     }
   };
+
+  const handleLogout=()=>{
+    window.localStorage.removeItem("loggedBlogappUser");
+    window.location.reload();
+  }
 
   const loginForm = () => {
     const hideWhenVisible = { display: loginVisible ? "none" : "" };
@@ -69,7 +75,6 @@ const App = () => {
             handleUsernameChange={({ target }) => setUsername(target.value)}
             handlePasswordChange={({ target }) => setPassword(target.value)}
             handleSubmit={handleLogin}
-            setLoginVisible={setLoginVisible}
           />
           <button onClick={() => setLoginVisible(false)}>cancel</button>
         </div>
@@ -94,10 +99,7 @@ const App = () => {
           {user.name} is logged-in
           <button
             style={{ marginLeft: "10px" }}
-            onClick={() => {
-              window.localStorage.clear();
-              window.location.reload();
-            }}
+            onClick={handleLogout}
           >
             Log Out
           </button>
@@ -113,7 +115,7 @@ const App = () => {
       </div>
       <h2>blogs</h2>
       <Notification message={addedNewBlogMessage} />
-      {blogs
+      {blogs.slice()
         .sort((a, b) => {
           return b.likes - a.likes;
         })
@@ -124,8 +126,8 @@ const App = () => {
             updateBlog={(updatedBlog) => {
               console.log(blog);
 
-              setBlogs(
-                blogs.map((b) =>
+              setBlogs((prev)=>
+                prev.map((b) =>
                   b.id === updatedBlog.id ? { ...updatedBlog } : b
                 )
               );
