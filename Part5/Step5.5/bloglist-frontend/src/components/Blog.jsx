@@ -36,9 +36,11 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
             style={{ marginLeft: 10 }}
             onClick={async () => {
               const updated = {
-                ...blog,
+                title:blog.title,
+                author:blog.author,
                 likes: blog.likes + 1,
-                user: blog.user.id || blog.user,
+                url:blog.url,
+                user: blog.user?.id || blog.user?._id || blog.user,
               };
               const updatedBlog = await blogService.update(blog.id, updated);
               updateBlog(updatedBlog);
@@ -48,7 +50,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
           </button>
         </div>
         {blog.url && <div>URL: {blog.url}</div>}
-        {blog.user || blog.user.name ? (
+        {blog.user && blog.user.name ? (
           <div>Added by: {blog.user.name}</div>
         ) : (
           <div>Added by: Unknown</div>
